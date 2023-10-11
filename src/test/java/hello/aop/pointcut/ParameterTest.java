@@ -59,7 +59,7 @@ public class ParameterTest {
             log.info("[this]{}, obj={}", joinPoint.getSignature(), obj.getClass());
         }
 
-        // proxy 객체로 반환해준다.
+        // target은 실제 대상을 가져온다.
         @Before("allMember() && target(obj)")
         public void targetArgs(JoinPoint joinPoint, MemberService obj) {
             log.info("[target]{}, obj={}", joinPoint.getSignature(), obj.getClass());

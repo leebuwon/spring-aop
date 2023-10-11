@@ -12,9 +12,14 @@ import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * execution(modifiers-pattern? ret-type-pattern declaring-type-pattern?namepattern(param-pattern) throws-pattern?)
+ * execution(접근제어자? 반환타입 선언타입?메서드이름(파라미터) 예외?)
+ */
 @Slf4j
 public class ExecutionTest {
 
+    // AspectJExpressionPointcut 이 바로 포인트컷 표현식을 처리해주는 클래스
     AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
     Method helloMethod;
 
@@ -128,6 +133,12 @@ public class ExecutionTest {
     void noArgsMatch() {
         pointcut.setExpression("execution(* *())");
         assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isFalse();
+    }
+
+    @Test
+    void argsMatch2() {
+        pointcut.setExpression("execution(* *(..))");
+        assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 
     // 정확히 하나의 파라미터 허용, 모든 타입 허용
